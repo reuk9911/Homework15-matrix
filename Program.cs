@@ -25,8 +25,8 @@ namespace Homework15_matrix
 
         static void Main(string[] args)
         {
-            Matrix m1 = new Matrix(3,2);
-            Matrix m2 = new Matrix(2,3);
+            Matrix m1 = new Matrix(200,300);
+            Matrix m2 = new Matrix(300,200);
             DateTime t1 = DateTime.Now;
             Task<Matrix> task1 = Task<Matrix>.Factory.StartNew(Fill, m1);
             Task<Matrix> task2 = Task<Matrix>.Factory.StartNew(Fill, m2);
@@ -46,9 +46,9 @@ namespace Homework15_matrix
 
             Console.WriteLine(t2-t1);
 
-            Console.WriteLine($@"m1 = { m1.ToString()}");
-            Console.WriteLine($@"m2 = {m2.ToString()}");
-            Console.WriteLine($@"res = {res.ToString()}");
+            //Console.WriteLine($@"m1 = {m1.ToString()}");
+            //Console.WriteLine($@"m2 = {m2.ToString()}");
+            //Console.WriteLine($@"res = {res.ToString()}");
 
 
 

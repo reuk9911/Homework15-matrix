@@ -26,10 +26,12 @@ namespace Homework15_matrix
         /// <param name="ind1">индекс строки результирующей матрицы</param>
         /// <param name="ind2">индекс столбца результирующей матрицы</param>
         /// <returns>Возвращает элемент результирующей матрицы с индексом [ind1, ind2]</returns>
-        private long SumMult(int ind1, int ind2)
+        private long SumMult(Object o)
         {
+            var coord = ((Coord)o);
+            int ind1 = coord.X;
+            int ind2 = coord.Y;
             long sum = 0;
-            
             for (int i=0; i<m1.dim2; i++)
             {
                 sum += m1[ind1, i] * m2[i, ind2];
@@ -37,17 +39,38 @@ namespace Homework15_matrix
 
             return sum;
         }
+        //PutMatrixElement
         public Matrix Multiply()
         {
+            int rstr = m1.dim1;
+            int rrow = m2.dim2;
+            Matrix resMatrix = new Matrix(rstr, rrow);
 
-            Matrix resMatrix = new Matrix(m1.dim2, m2.dim1);
-            for (int i=0; i<m1.dim1; i++)
+            Task<long>[] SumMultTasks = new Task<long>[rstr * rrow];
+            int k = 0;
+            for (int i = 0; i < rstr; i++)
             {
-                for (int j=0; j<m2.dim2; j++)
+                for (int j = 0; j < rrow; j++)
                 {
-                    Task<long> SumMultTask = new Task<long>(() => SumMult(i, j));
-                    SumMultTask.Start();
-                    resMatrix[i, j] = SumMultTask.Result;
+                    //SumMultTasks[k] = new Task<long>(SumMult, new Coord(i,j));
+                    //SumMultTasks[k].Start();
+                    Task<long> taskSumMultThenF = Task.Factory
+                        .StartNew(SumMult, new Coord(i,j)) // returns Task<decimal>
+                        .ContinueWith(
+                        previousTask => // returns Task<string>
+                        CallStoredProcedure(previousTask.Result));
+                    k++;
+                }
+            }
+            
+            Task.WaitAll();
+            k = 0;
+            for (int i = 0; i < rstr; i++)
+            {
+                for (int j = 0; j < rrow; j++)
+                {
+                    resMatrix[i,j] = SumMultTasks[k].Result;
+                    k++;
                 }
             }
             return resMatrix;

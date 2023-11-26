@@ -8,7 +8,15 @@ namespace Homework15_matrix
 {
     public class Matrix
     {
-        public long[,] matr { get; set; }
+        #region Поля и свойства
+        /// <summary>
+        /// Матрица
+        /// </summary>
+        private long[,] matr;
+        
+        /// <summary>
+        /// 
+        /// </summary>
         public int dim1
         {
             get { return matr.GetLength(0); }
@@ -18,11 +26,18 @@ namespace Homework15_matrix
             get { return matr.GetLength(1); }
         }
 
+        #endregion
+
+        #region Конструкторы
+
         public Matrix(int dim1, int dim2)
         {
             this.matr = new long[dim1, dim2];
         }
 
+        #endregion
+        #region Методы
+        
         public override string ToString()
         {
             string s = "\n";
@@ -38,12 +53,17 @@ namespace Homework15_matrix
             }
             return s;
         }
+
+        #endregion
+        
+        #region Индексаторы
+        
         public long this[int index1, int index2]
         {
             get { return matr[index1, index2]; }
             set { matr[index1, index2] = value; }
-
-
         }
+
+        #endregion
     }
 }

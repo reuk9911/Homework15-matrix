@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,14 +13,26 @@ namespace Homework15_matrix
 
         #region Поля и свойства
 
-        private static Matrix resMatrix;
+        private static Matrix? resMatrix;
 
-        private static Matrix m1;
-        private static Matrix m2;
+        private static Matrix? m1;
+        private static Matrix? m2;
+        private static Object o;
+
+        #endregion
+
+        #region Конструкторы
+
+        static MatrixOperations()
+        {
+            o = new Object();
+        }
 
         #endregion
 
         #region Методы
+
+
 
         /// <summary>
         /// Сумма m1[i,j]*m2[j,i]
@@ -27,6 +40,12 @@ namespace Homework15_matrix
         /// <param name="ind1">индекс строки результирующей матрицы</param>
         /// <param name="ind2">индекс столбца результирующей матрицы</param>
         /// <returns>Возвращает элемент результирующей матрицы с индексом [ind1, ind2]</returns>
+        /// 
+
+        /// <summary>
+        /// Заполняет элемент результирующей матрицы с индексом [ind1, ind2]
+        /// </summary>
+        /// <param name="o">Координаты Coord в результирующей матрице</param>
         private static void SumMult(Object o)
         {
             var coord = (Coord)o;
@@ -37,7 +56,10 @@ namespace Homework15_matrix
             {
                 sum += m1[ind1, i] * m2[i, ind2];
             }
-            resMatrix[ind1, ind2] = sum;
+            lock (o) 
+            {
+                resMatrix[ind1, ind2] = sum;
+            }
         }
 
         /// <summary>

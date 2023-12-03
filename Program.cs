@@ -73,12 +73,12 @@ namespace Homework15_matrix
 
             DateTime t2 = DateTime.Now;
 
-            Console.WriteLine(t2 - t1);
+            Console.WriteLine($@"Умножение завершено за {t2 - t1}") ;
 
             // Закомментировать для больших матриц
-            Console.WriteLine($@"m1 = {m1.ToString()}");
-            Console.WriteLine($@"m2 = {m2.ToString()}");
-            Console.WriteLine($@"res = {res.ToString()}");
+            //Console.WriteLine($@"m1 = {m1.ToString()}");
+            //Console.WriteLine($@"m2 = {m2.ToString()}");
+            //Console.WriteLine($@"res = {res.ToString()}");
         }
     }
 }
